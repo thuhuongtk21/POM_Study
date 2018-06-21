@@ -18,7 +18,7 @@ public class AbstractTest {
 			  System.setProperty("webdriver.chrome.driver", ".\\resources\\chromedriver.exe");
 			  driver = new ChromeDriver();
 		  }else {
-			  System.setProperty("webdriver.ie.drivẻ", ".\\resources\\IEDriverServer.exe");
+			  System.setProperty("webdriver.ie.driver", ".\\resources\\IEDriverServer.exe");
 			  driver = new InternetExplorerDriver();
 		  }
 		  
