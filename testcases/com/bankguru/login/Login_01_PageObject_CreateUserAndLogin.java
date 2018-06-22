@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import commons.AbstractTest;
+import commons.PageFactoryManager;
 import pages.HomePagePO;
 import pages.LoginPagePO;
 import pages.RegisterPagePO;;
@@ -22,38 +23,28 @@ public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
 	@Parameters({ "browser" })
 	@BeforeClass
 	public void beforeClass(String browser) {
-		driver = openMultiBrowser(browser);
-		loginPage = new LoginPagePO(driver);
-
+		driver = openMultiBrowser(browser);	
+		loginPage = PageFactoryManager.getLoginPage(driver);
 		email = "automation" + randomNumber() + "@gmail.com";
 	}
 
 	@Test
 	public void TC_Login01_CreateUser() {
 		loginUrl = loginPage.getLoginPageUrl();
-
-		loginPage.clickToHereLink();
-
-		registerPage = new RegisterPagePO(driver);
-
+		registerPage = loginPage.clickToHereLink();
 		registerPage.inputToEmailIdTextbox(email);
-
-		registerPage.clickToSubmitButton();
-
+		registerPage.clickToSubmitButton();		
 		username = registerPage.getUserIdInfor();
 		passWord = registerPage.getPasswordInfor();
 	}
+
 	@Test
 	public void TC_Login02_LoginToApplication() {
-		registerPage.openLoginPage(loginUrl);
+		loginPage = registerPage.openLoginPage(loginUrl);
 		loginPage = new LoginPagePO(driver);
-
 		loginPage.inputToUsernameTextbox(username);
 		loginPage.inputToPasswordTextbox(passWord);
-		loginPage.clickToSubmitButton();
-
-		homePage = new HomePagePO(driver);
-
+		homePage = loginPage.clickToSubmitButton();
 		Assert.assertTrue(homePage.isWelcomeMessageDisplayed());
 	}
 
