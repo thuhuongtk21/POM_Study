@@ -4,61 +4,62 @@ import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
-import java.util.Random;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import commons.AbstractTest;
+import pages.HomePagePO;
+import pages.LoginPagePO;
+import pages.RegisterPagePO;;
 
-public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest{
-  WebDriver driver;
-  String userID, passWord, loginUrl;
+public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
+	WebDriver driver;
+	String email, username, passWord, loginUrl;
+	private LoginPagePO loginPage;
+	private RegisterPagePO registerPage;
+	private HomePagePO homePage;
 
-  @Parameters({"browser"})
-  @BeforeClass
-  public void beforeClass(String browser) {
-	  openMultiBrowser(browser);
-  }
-  @Test
-  public void TC_Login01_CreateUser() {
-	  loginUrl = driver.getCurrentUrl();
-	  driver.findElement(By.xpath("//a[text()='here']")).click();
-	  driver.findElement(By.xpath("//input[@name='emailid']")).sendKeys("automation" +randomNumber()+ "@gmail.com");
-	  driver.findElement(By.xpath("//input[@name ='btnLogin']")).click();
-	  
-	  Assert.assertTrue(driver.findElement(By.xpath("//h2[text()='Access details to demo site.']")).isDisplayed());
-	  
-	  userID = driver.findElement(By.xpath("//td[text()='User ID :']/following-sibling::td")).getText();
-	  passWord = driver.findElement(By.xpath("//td[text()='Password :']/following-sibling::td")).getText();
-  }
-  
-  public void TC_Login02_LoginToApplication() {
-	  driver.get(loginUrl);
-	  
-	  driver.findElement(By.xpath("//input[@name='uid']")).sendKeys(userID);
-	  driver.findElement(By.xpath("//input[@name='password']")).sendKeys(passWord);
-	  driver.findElement(By.xpath("//input[@name='btnLogin']")).click();
-	  
-	  WebElement loginMessage = driver.findElement(By.xpath("//marquee"));
-	  Assert.assertEquals("Welcome To Manager's Page of Guru99 Bank<", loginMessage.getText());
-	  
-	  WebElement containUserID = driver.findElement(By.xpath("//td[text()='Manger Id : \"+userID+\"']"));
-	  Assert.assertEquals("Manger Id : "+userID+"", containUserID);
-	
-  }
-  
-  
+	@Parameters({ "browser" })
+	@BeforeClass
+	public void beforeClass(String browser) {
+		driver = openMultiBrowser(browser);
+		loginPage = new LoginPagePO(driver);
 
-  @AfterClass
-  public void afterClass() {
-	  driver.close();
-  }
+		email = "automation" + randomNumber() + "@gmail.com";
+	}
 
-  public int randomNumber() {
-	  Random random = new Random();
-	  int number = random.nextInt(999999);
-	  return number;
-  }
+	@Test
+	public void TC_Login01_CreateUser() {
+		loginUrl = loginPage.getLoginPageUrl();
+
+		loginPage.clickToHereLink();
+
+		registerPage = new RegisterPagePO(driver);
+
+		registerPage.inputToEmailIdTextbox(email);
+
+		registerPage.clickToSubmitButton();
+
+		username = registerPage.getUserIdInfor();
+		passWord = registerPage.getPasswordInfor();
+	}
+	@Test
+	public void TC_Login02_LoginToApplication() {
+		registerPage.openLoginPage(loginUrl);
+		loginPage = new LoginPagePO(driver);
+
+		loginPage.inputToUsernameTextbox(username);
+		loginPage.inputToPasswordTextbox(passWord);
+		loginPage.clickToSubmitButton();
+
+		homePage = new HomePagePO(driver);
+
+		Assert.assertTrue(homePage.isWelcomeMessageDisplayed());
+	}
+
+	@AfterClass
+	public void afterClass() {
+		driver.close();
+	}
+
 }

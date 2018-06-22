@@ -11,7 +11,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AbstractPage {
 	
@@ -248,5 +250,13 @@ public class AbstractPage {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		return (boolean) js.executeScript("return arguments[0].complete &&" + "typeof arguments[0].naturaWidth != 'undefined' && arguments[0].naturaWidth > 0", image);
 	}
+	
+	public void waitForControlVisible(WebDriver driver, String locator) {
+		WebDriverWait wait = new WebDriverWait(driver, 50);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
+		
+	}
+	
+	
 
 }

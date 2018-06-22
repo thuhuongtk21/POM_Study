@@ -4,14 +4,14 @@
   <test name="Run on FIREFOX browser">
     <parameter name = "browser" value = "firefox"/>
     <classes>
-      <class name="com.bankguru.login.Login_01_CreateUserAndLogin"/>
+      <class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin"/>
     </classes>
   </test>
   
   <test name="Run on CHROME browser">
     <parameter name = "browser" value = "chrome"/>
     <classes>
-      <class name="com.bankguru.login.Login_01_CreateUserAndLogin"/>
+      <class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin"/>
     </classes>
   </test>
   
