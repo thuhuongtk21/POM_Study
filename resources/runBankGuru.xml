@@ -8,12 +8,12 @@
     </classes>
   </test>
   
-  <test name="Run on CHROME browser">
+  <!-- <test name="Run on CHROME browser">
     <parameter name = "browser" value = "chrome"/>
     <classes>
       <class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin"/>
     </classes>
-  </test>
+  </test> -->
   
 <!--   <test name="Run on IE browser">
     <parameter name = "browser" value = "ie"/>

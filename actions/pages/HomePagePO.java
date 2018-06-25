@@ -18,4 +18,6 @@ public class HomePagePO extends AbstractPage {
 		return isControlDisplayed(driver, HomePageUI.WELCOM_MESSAGE);
 	}
 
+	
+
 }

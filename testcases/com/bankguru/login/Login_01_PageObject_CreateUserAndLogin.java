@@ -9,8 +9,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import commons.AbstractTest;
 import commons.PageFactoryManager;
+import pages.DeleteCustomerPagePO;
+import pages.EditCustomerPagePO;
 import pages.HomePagePO;
 import pages.LoginPagePO;
+import pages.NewCustomerPagePO;
 import pages.RegisterPagePO;;
 
 public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
@@ -19,6 +22,9 @@ public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
 	private LoginPagePO loginPage;
 	private RegisterPagePO registerPage;
 	private HomePagePO homePage;
+	private NewCustomerPagePO newCustomerPage;
+	private EditCustomerPagePO editCustomerPage;
+	private DeleteCustomerPagePO deleteCustomerPage;
 
 	@Parameters({ "browser" })
 	@BeforeClass
@@ -46,6 +52,13 @@ public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
 		loginPage.inputToPasswordTextbox(passWord);
 		homePage = loginPage.clickToSubmitButton();
 		Assert.assertTrue(homePage.isWelcomeMessageDisplayed());
+		
+		newCustomerPage = homePage.openNewCustomerPage(driver);
+		editCustomerPage = newCustomerPage.openEditCustomerPage(driver);
+		deleteCustomerPage = editCustomerPage.openDeleteCustomerPage(driver);
+		homePage = deleteCustomerPage.openHomePage(driver);
+		editCustomerPage = homePage.openEditCustomerPage(driver);
+		loginPage = editCustomerPage.openLogOutPage(driver);
 	}
 
 	@AfterClass
