@@ -5,7 +5,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import commons.AbstractTest;
 import commons.PageFactoryManager;
@@ -26,10 +25,10 @@ public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
 	private EditCustomerPagePO editCustomerPage;
 	private DeleteCustomerPagePO deleteCustomerPage;
 
-	@Parameters({ "browser" })
+	@Parameters({ "browser", "version"})
 	@BeforeClass
-	public void beforeClass(String browser) {
-		driver = openMultiBrowser(browser);	
+	public void beforeClass(String browser, String version) {
+		driver = openMultiBrowser(browser, version);
 		loginPage = PageFactoryManager.getLoginPage(driver);
 		email = "automation" + randomNumber() + "@gmail.com";
 	}
@@ -47,11 +46,10 @@ public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
 	@Test
 	public void TC_Login02_LoginToApplication() {
 		loginPage = registerPage.openLoginPage(loginUrl);
-		loginPage = new LoginPagePO(driver);
 		loginPage.inputToUsernameTextbox(username);
 		loginPage.inputToPasswordTextbox(passWord);
 		homePage = loginPage.clickToSubmitButton();
-		Assert.assertTrue(homePage.isWelcomeMessageDisplayed());
+		verifyTrue(homePage.isWelcomeMessageDisplayed());
 		
 		newCustomerPage = homePage.openNewCustomerPage(driver);
 		editCustomerPage = newCustomerPage.openEditCustomerPage(driver);
@@ -63,7 +61,7 @@ public class Login_01_PageObject_CreateUserAndLogin extends AbstractTest {
 
 	@AfterClass
 	public void afterClass() {
-		driver.close();
+		closeBrowser(driver);
 	}
 
 }

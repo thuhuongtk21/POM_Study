@@ -3,17 +3,20 @@
   
   <test name="Run on FIREFOX browser">
     <parameter name = "browser" value = "firefox"/>
+    <parameter name = "version" value = ""/>
     <classes>
       <class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin"/>
     </classes>
   </test>
   
-  <!-- <test name="Run on CHROME browser">
+  <test name="Run on CHROME browser">
     <parameter name = "browser" value = "chrome"/>
+    <parameter name = "version" value = "2.39"/>
+    <!-- <parameter name = "url" value = "http://..."/> -->
     <classes>
       <class name="com.bankguru.login.Login_01_PageObject_CreateUserAndLogin"/>
     </classes>
-  </test> -->
+  </test>
   
 <!--   <test name="Run on IE browser">
     <parameter name = "browser" value = "ie"/>

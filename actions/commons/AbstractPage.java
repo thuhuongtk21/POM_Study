@@ -56,8 +56,8 @@ public class AbstractPage {
 		element.click();
 	}
 	
-	public void clickToElement(WebDriver driver, String locator, String value) {
-		locator = String.format(locator, value);
+	public void clickToElement(WebDriver driver, String locator, String... value) {
+		locator = String.format(locator, (Object[])value);
 		System.out.println("Click to element "+ locator);
 		WebElement element = driver.findElement(By.xpath(locator));
 		element.click();
@@ -116,8 +116,8 @@ public class AbstractPage {
 
 	}
 	
-	public void checkTheCheckbox(WebDriver driver, String locator, String value) {
-		locator = String.format(locator, value);
+	public void checkTheCheckbox(WebDriver driver, String locator, String... value) {
+		locator = String.format(locator, (Object[])value);
 		WebElement element = driver.findElement(By.xpath(locator));
 		if (!element.isSelected()) {
 			element.click();
@@ -133,8 +133,8 @@ public class AbstractPage {
 
 	}
 	
-	public void uncheckTheCheckbox(WebDriver driver, String locator, String value) {
-		locator = String.format(locator, value);
+	public void uncheckTheCheckbox(WebDriver driver, String locator, String... value) {
+		locator = String.format(locator, (Object[])value);
 		WebElement element = driver.findElement(By.xpath(locator));
 		if (element.isSelected()) {
 			element.click();
@@ -148,9 +148,8 @@ public class AbstractPage {
 
 	}
 	
-	public boolean isControlDisplayed(WebDriver driver, String locator, String value) {
-		locator = String.format(locator, value);
-		System.out.println("Dynamic is control displayed = "+ locator);
+	public boolean isControlDisplayed(WebDriver driver, String locator, String... value) {
+		locator = String.format(locator, (Object[])value);
 		WebElement element = driver.findElement(By.xpath(locator));
 		return element.isDisplayed();
 
@@ -319,11 +318,11 @@ public class AbstractPage {
 	
 	public void waitForControlVisible(WebDriver driver, String locator, String value) {
 		locator = String.format(locator, value);
-		System.out.println("Wait for dynamic control visible = "+ locator);
 		WebDriverWait wait = new WebDriverWait(driver, 50);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
 
 	}
+	
 	
 	
 	/*Open Dynamic Page*/
